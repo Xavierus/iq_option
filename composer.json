@@ -1,0 +1,6 @@
+{
+    "name": "root/iqoption",
+    "require": {
+        "symfony/console": "3.4"
+    }
+}

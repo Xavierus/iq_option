@@ -1,0 +1,38 @@
+php:
+  container_name: php-test
+  build: .
+  stdin_open: true
+  tty: true
+  net: "host"
+  ports:
+    - "10111:10111"
+  environment:
+    PHP_IDE_CONFIG: "serverName=IqOption"
+  volumes:
+    - ./:/var/www/iqoption
+    - ./php.ini:/etc/opt/remi/php71/php.d/99.ini:ro
+
+db:
+  container_name: mysql-test
+  image: mysql
+  net: "host"
+  ports:
+    - "3306:3306"
+  environment:
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_DATABASE: demo
+  volumes:
+    - ./migrations:/docker-entrypoint-initdb.d
+
+rabbit_mq:
+  container_name: rabbit_mq-test
+  image: "rabbitmq:3-management"
+  environment:
+    RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+    RABBITMQ_DEFAULT_USER: "rabbitmq"
+    RABBITMQ_DEFAULT_PASS: "rabbitmq"
+    RABBITMQ_DEFAULT_VHOST: "/"
+  net: "host"
+  ports:
+    - "15672:15672"
+    - "5672:5672"
