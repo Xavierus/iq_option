@@ -10,4 +10,5 @@ class UserBalanceTransactionTypeEnum
     public const TRANSFER = 3;
     public const COMMIT = 4;
     public const ROLLBACK = 5;
+    public const LOCK = 6;
 }

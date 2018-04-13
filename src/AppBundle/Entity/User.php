@@ -39,4 +39,12 @@ class User
     {
         $this->balance = $balance;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
 }

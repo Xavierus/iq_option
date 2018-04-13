@@ -26,6 +26,14 @@ class UserBalanceTransaction
     private $user;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(name="user_id_destination", referencedColumnName="user_id")
+     */
+    private $userDestination;
+
+    /**
      * @ORM\Column(type="decimal", name="sum", precision=13, scale=2)
      */
     private $sum;
@@ -61,6 +69,14 @@ class UserBalanceTransaction
     }
 
     /**
+     * @param User $userDestination
+     */
+    public function setUserDestination(User $userDestination): void
+    {
+        $this->userDestination = $userDestination;
+    }
+
+    /**
      * @param mixed $sum
      */
     public function setSum($sum): void
@@ -82,5 +98,29 @@ class UserBalanceTransaction
     public function setTypeId(int $typeId): void
     {
         $this->typeId = $typeId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStateId(): int
+    {
+        return $this->stateId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSum()
+    {
+        return $this->sum;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
     }
 }

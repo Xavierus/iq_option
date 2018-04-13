@@ -11,12 +11,17 @@ class UserBalanceTransactionDto implements \JsonSerializable
     private $transactionId;
 
     /**
-     * @var int
+     * @var int|null
      */
     private $userId;
 
     /**
-     * @var string
+     * @var int|null
+     */
+    private $userIdDestination;
+
+    /**
+     * @var string|null
      */
     private $sum;
 
@@ -27,16 +32,18 @@ class UserBalanceTransactionDto implements \JsonSerializable
 
     /**
      * @param int $transactionId
-     * @param int $userId
-     * @param string $sum
      * @param int $typeId
+     * @param int|null $userId
+     * @param string|null $sum
+     * @param int|null $userIdDestination
      */
-    public function __construct(int $transactionId, int $userId, string $sum, int $typeId)
+    public function __construct(int $transactionId, int $typeId, int $userId = null, string $sum = null, int $userIdDestination = null)
     {
         $this->transactionId = $transactionId;
         $this->userId = $userId;
         $this->sum = $sum;
         $this->typeId = $typeId;
+        $this->userIdDestination = $userIdDestination;
     }
 
     /**
@@ -71,6 +78,14 @@ class UserBalanceTransactionDto implements \JsonSerializable
         return $this->typeId;
     }
 
+    /**
+     * @return int|null
+     */
+    public function getUserIdDestination(): ?int
+    {
+        return $this->userIdDestination;
+    }
+
     public function jsonSerialize()
     {
         return [
@@ -78,6 +93,7 @@ class UserBalanceTransactionDto implements \JsonSerializable
             'user_id' => $this->userId,
             'sum' => $this->sum,
             'type_id' => $this->typeId,
+            'user_id_destination' => $this->userIdDestination,
         ];
     }
 }

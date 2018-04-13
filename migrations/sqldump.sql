@@ -2,6 +2,7 @@ BEGIN;
 
   DROP TABLE IF EXISTS user_balance_transaction;
   DROP TABLE IF EXISTS user_balance_transaction_state;
+  DROP TABLE IF EXISTS user_balance_transaction_type;
   DROP TABLE IF EXISTS user;
 
   CREATE TABLE user (
@@ -25,7 +26,7 @@ BEGIN;
   INSERT INTO user_balance_transaction_state
   VALUES
     (1, 'dirty'),
-    (2, 'pending'),
+    (2, 'locked'),
     (3, 'rolledback'),
     (4, 'commited'),
     (5, 'failed');
@@ -43,12 +44,13 @@ BEGIN;
     (2, 'credit'),
     (3, 'transfer'),
     (4, 'commit'),
-    (5, 'rollback');
-
+    (5, 'rollback'),
+    (6, 'lock');
 
   CREATE TABLE user_balance_transaction (
     user_balance_transaction_id int(11) NOT NULL AUTO_INCREMENT,
     user_id int(11) NOT NULL,
+    user_id_destination int(11) NULL,
     sum DECIMAL(13, 2) NOT NULL,
     user_balance_transaction_state_id int(11) NOT NULL,
     user_balance_transaction_type_id int(11) NOT NULL,

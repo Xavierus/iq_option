@@ -2,7 +2,6 @@ services:
     consumer.user_balance_transaction:
         class: AppBundle\Consumer\UserBalanceTransactionConsumer
         arguments:
-          - '@monolog.logger'
           - '@serializer'
           - '@doctrine.dbal.default_connection'
           - '@repository.user_balance_transaction'
