@@ -1,0 +1,3 @@
+services:
+    service.money_calculator:
+        class: AppBundle\Service\Tools\MoneyCalculatorService

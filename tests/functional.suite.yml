@@ -1,0 +1,12 @@
+actor: FunctionalTester
+modules:
+    enabled:
+        - Symfony:
+            var_path: '/app'
+            app_path: '/app'
+        - REST:
+            url: http://localhost
+            depends: Symfony
+        - Asserts
+        - Cli
+        - \Helper\Functional

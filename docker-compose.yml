@@ -9,7 +9,7 @@ php:
   environment:
     PHP_IDE_CONFIG: "serverName=IqOption"
   volumes:
-    - ./:/var/www/iqoption
+    - ./:/var/www/iq_option
     - ./php.ini:/etc/opt/remi/php71/php.d/99.ini:ro
 
 db:
