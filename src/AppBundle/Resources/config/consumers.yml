@@ -1,9 +1,0 @@
-services:
-    consumer.user_balance_transaction:
-        class: AppBundle\Consumer\UserBalanceTransactionConsumer
-        arguments:
-          - '@serializer'
-          - '@doctrine.dbal.default_connection'
-          - '@repository.user_balance_transaction'
-          - '@doctrine.orm.entity_manager'
-          - '@service.money_calculator'

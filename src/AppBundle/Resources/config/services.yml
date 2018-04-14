@@ -1,3 +1,27 @@
 services:
+    _defaults:
+        public: false
+
+    service.user_balance_transaction.consumer:
+        class: AppBundle\Service\User\Balance\UserBalanceTransactionConsumer
+        arguments:
+          - '@serializer'
+          - '@service.user_balance_transaction_factory'
+          - '@doctrine.orm.entity_manager'
+          - '@service.user_balance_transaction_finished.producer'
+
+    service.user_balance_transaction_finished.producer:
+        class: AppBundle\Service\User\Balance\UserBalanceTransactionFinishedProducer
+        arguments:
+          - '@old_sound_rabbit_mq.user_balance_transaction_finished_producer'
+          - '@serializer'
+
     service.money_calculator:
         class: AppBundle\Service\Tools\MoneyCalculatorService
+
+    service.user_balance_transaction_factory:
+        class: AppBundle\Service\User\Balance\Transaction\BalanceTransactionFactory
+        arguments:
+          - '@doctrine.orm.entity_manager'
+          - '@service.money_calculator'
+          - '@service.user_balance_transaction_finished.producer'

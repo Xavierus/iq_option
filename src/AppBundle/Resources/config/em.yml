@@ -1,4 +1,7 @@
 services:
+    _defaults:
+        public: false
+
     repository.user_balance_transaction:
         class: AppBundle\Entity\Repository\UserBalanceTransactionRepository
         factory: ['@doctrine.orm.entity_manager', getRepository]

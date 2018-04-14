@@ -18,3 +18,5 @@ ORDER BY NULL;'"
 
 **4 Task (linked list)**
 Execute "docker-compose run php php /src/linked_list_inversion.php"
+даты создания и последнего обновления транзакции
+input data verify
