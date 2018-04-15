@@ -13,8 +13,6 @@ BEGIN;
 
   INSERT INTO user VALUES (1, 101);
   INSERT INTO user VALUES (2, 0);
-  INSERT INTO user VALUES (3, 0);
-  INSERT INTO user VALUES (4, 0);
 
 
   CREATE TABLE user_balance_transaction_state (

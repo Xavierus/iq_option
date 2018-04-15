@@ -1,20 +1,7 @@
-php:
-  container_name: php-test
-  build: .
-  stdin_open: true
-  tty: true
-  net: "host"
-  ports:
-    - "10111:10111"
-  environment:
-    PHP_IDE_CONFIG: "serverName=IqOption"
-  volumes:
-    - ./:/var/www/iq_option
-    - ./php.ini:/etc/opt/remi/php71/php.d/99.ini:ro
-
 db:
   container_name: mysql-test
   image: mysql
+  restart: always
   net: "host"
   ports:
     - "3306:3306"
@@ -27,6 +14,7 @@ db:
 rabbit_mq:
   container_name: rabbit_mq-test
   image: "rabbitmq:3-management"
+  restart: always
   environment:
     RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
     RABBITMQ_DEFAULT_USER: "rabbitmq"
@@ -36,3 +24,20 @@ rabbit_mq:
   ports:
     - "15672:15672"
     - "5672:5672"
+
+php:
+  container_name: php-test
+  build: .
+  restart: always
+  #stdin_open: true
+  #tty: true
+  command: bin/console rabbitmq:consumer user_balance_transaction
+  net: "host"
+  ports:
+    - "10111:10111"
+  environment:
+    PHP_IDE_CONFIG: "serverName=IqOption"
+  volumes:
+    - ./:/var/www/iq_option
+    - ./php.ini:/etc/opt/remi/php71/php.d/99.ini:ro
+  working_dir: /var/www/iq_option
