@@ -1,22 +1,21 @@
-All commands should be executed from project root dir.
+Список улучшений, которые можно сделать, но на которые не хватило времени:
+1) Добавить валидацию входных данных
+2) Доработать/донастроить Serializer Symfony так, чтобы он мог работать с информацией из конструктора DTO
+3) Доработать связи между контейнерами докера так, чтобы они стартовали полностью автоматически 
+4) Актуализировать версии PHP, убрать лишние зависимости. Я за основу для докера php взял один из рабочих вариантов и не стал тратить время убирать лишнее/актуализировать
+5) В требованиях задачи сказано что воркеры могут запускаться и работать произвольное время. Сейчас чтобы в случае падений сервис автоматически поднимался я использовал настройку докера restart, я бы лучше добавил отдельный мастер процесс который будет следить за этим. На работе мы используем питоновский supervisord.
+6) Сессии гранить в базе (редис, ну или реляционная на худой конец) или в шаринговой ФС, если планируются инстансы на разных серверах.
+7) На юнит тесты не было времени, написал несколько функциональный на codeception, для запуска зайти в докер в папку проекта и выполнить vendor/bin/codecept run.
 
-Execute "docker-compose build"
-
-**1 Task**
-Execute "docker-compose run php php /src/init_usage.php"
-
-**2 Task**
-Execute "docker-compose run php php /src/search_files.php"
-
-**3 Task**
-Execute "docker-compose exec db mysql -u root -proot demo -e 'SELECT books.title, COUNT(books_authors.author_id) as authors_count \
-FROM books \
-LEFT JOIN books_authors ON books_authors.book_id = books.id \
-GROUP BY books_authors.book_id, books.title \
-HAVING authors_count > 2
-ORDER BY NULL;'"
-
-**4 Task (linked list)**
-Execute "docker-compose run php php /src/linked_list_inversion.php"
-даты создания и последнего обновления транзакции
-input data verify
+Для запуска понадобится docker, проверялось на версии 1.12.6 и Fedora 25. 
+Для всех пунктов перед переходом на след пункт необходимо дождаться успешного выполнения предыдущего, ну и соответственно не прерывать процессы Реббита, Базы.
+- склонировать проект , перейти в его папку
+- дать права 777 на папки логов и кеша Symfony var/cache, var/logs
+- поднять Rabbit 
+docker-compose run rabbit_mq
+- поднять mysql
+docker-compose run db
+- выполнить composer install
+docker-compose run --rm php composer install --no-interaction
+- запустить консюмера сообщений из брокера 
+docker-compose run php
